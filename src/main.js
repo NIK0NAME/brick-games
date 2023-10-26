@@ -266,6 +266,8 @@ function checkCollision(a, b) {
 }
 
 function handleKeyboardInput() {
+  if (state !== 'PLAY') return;
+
   if (keyIsDown(UP_ARROW)) {
       if (driver.y > 0) {
         driver.y -= 1;
@@ -286,22 +288,24 @@ function handleKeyboardInput() {
 }
 
 function keyPressed() {
-  if (keyCode === LEFT_ARROW) {
-      if (driver.x === 5) {
-        sounds['side'].play();
-        driver.x = 2;
-      } else {
-        sounds['wall'].play();
-      }
-  }
+  if (state === 'PLAY') {
+    if (keyCode === LEFT_ARROW) {
+        if (driver.x === 5) {
+          sounds['side'].play();
+          driver.x = 2;
+        } else {
+          sounds['wall'].play();
+        }
+    }
 
-  if (keyCode === RIGHT_ARROW) {
-      if (driver.x === 2) {
-        sounds['side'].play();
-        driver.x = 5;
-      } else {
-        sounds['wall'].play();
-      }
+    if (keyCode === RIGHT_ARROW) {
+        if (driver.x === 2) {
+          sounds['side'].play();
+          driver.x = 5;
+        } else {
+          sounds['wall'].play();
+        }
+    }
   }
 
   if (keyCode === 27) {
