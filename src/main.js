@@ -9,12 +9,15 @@ const carPositions = [2 ,5];
 
 const offset = { x: 100, y: 100 };
 
+// PLAY, PAUSE, LOSE
+let state = 'PLAY';
+
 let road = [
   1, 1, 1, 0, 0, 1, 1, 1, 0, 0,
   1, 1, 1, 0, 0, 1, 1, 1, 0, 0
 ];
 
-const traffic = [];
+let traffic = [];
 
 const driver = {
   x: 2,
@@ -34,7 +37,7 @@ function setup() {
 
 let countToUpdate = 0;
 let updateInterval = 10;
-let trafficSpeed = 0.8;
+let trafficSpeed = 1;
 let score = 0;
 
 function draw() {
@@ -42,14 +45,17 @@ function draw() {
 
   background('#a7a994');
 
-  countToUpdate += trafficSpeed;
+  if (state === 'PLAY') {
+    countToUpdate += trafficSpeed;
 
-  if (countToUpdate >= updateInterval) {
-    countToUpdate = 0;
-    updateRoad();
-    updateTraffic();
+    if (countToUpdate >= updateInterval) {
+      countToUpdate = 0;
+      updateRoad();
+      updateTraffic();
+    }
   }
 
+  textSize(12);
   text('BRICK GAMES', 100, 80);
 
   translate(offset.x, offset.y);
@@ -60,7 +66,33 @@ function draw() {
   drawDriver();
 
   drawIndicators();
-  translate(0, 0);
+  translate(-offset.x, -offset.y);
+
+  if (state === 'LOSE') {
+    textSize(24);
+    fill('black');
+    stroke('red');
+    rect(50, 50, 280, 50);
+
+    fill('red');
+    text('YOU FAKIN LOSER...', 60, 85);
+  }
+}
+
+function initGame() {
+  countToUpdate = 0;
+  updateInterval = 10;
+  trafficSpeed = 1;
+  score = 0;
+
+  driver.x = 2;
+  driver.y = 8;
+
+  traffic = [];
+
+  spawnTrafficCar();
+
+  state = 'PLAY';
 }
 
 function updateRoad() {
@@ -70,16 +102,44 @@ function updateRoad() {
 
 function updateTraffic(direction = 1) {
   for (let i = traffic.length - 1; i >= 0; i--) {
-    const traficCar = traffic[i];
-    const { car } = traficCar;
+    const trafficCar = traffic[i];
+    const { car } = trafficCar;
 
-    traficCar.y += direction;
+    trafficCar.y += direction;
 
-    if (traficCar.y * chunkSize > roadHeight * chunkSize) {
+    if (trafficCar.y * chunkSize > roadHeight * chunkSize) {
         traffic.splice(i ,1);
-        score += 100;
+        handleAddScore();
         spawnTrafficCar();
+    } else {
+      if (checkCollision(trafficCar, driver)) {
+        traffic.splice(i ,1);
+        handleDecreaseScore();
+        spawnTrafficCar();
+      }
     }
+  }
+}
+
+function handleDecreaseScore() {
+  score -= 100;
+
+  if (score < 0) {
+    if (trafficSpeed === 1 && score < 0) {
+      state = 'LOSE';
+    } else if (trafficSpeed > 1) {
+      trafficSpeed -= 0.5;
+      score = 0;
+    }
+  }
+}
+
+function handleAddScore() {
+  score += 100;
+
+  if (score === 2000 && trafficSpeed < 8) {
+    trafficSpeed += 0.5;
+    score = 0;
   }
 }
 
@@ -164,15 +224,22 @@ function drawCar(data) {
 }
 
 function drawTraffic() {
-  for (const traficCar of traffic) {
+  for (const trafficCar of traffic) {
     drawCar({
-    vehicle: traficCar,
+    vehicle: trafficCar,
       colors: {
         strokeColor: '#676f58',
         fillColor: '#1e1f0f',
       }
     });
   }
+}
+
+function checkCollision(a, b) {
+  return (
+    a.x === b.x &&
+    a.y <= b.y + b.car.length && a.y + a.car.length >= b.y
+  );
 }
 
 function handleKeyboardInput() {
@@ -190,6 +257,7 @@ function handleKeyboardInput() {
 }
 
 function keyPressed() {
+  console.log(keyCode);
   if (keyCode === LEFT_ARROW) {
       if (driver.x === 5) {
         driver.x = 2;
@@ -200,5 +268,11 @@ function keyPressed() {
       if (driver.x === 2) {
         driver.x = 5;
       }
+  }
+
+  if (keyCode === 27) {
+    if (state === 'PLAY') state = 'PAUSE';
+    else if (state === 'PAUSE') state = 'PLAY';
+    else if (state === 'LOSE') initGame();
   }
 }
