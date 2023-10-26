@@ -8,6 +8,7 @@ const chunkSize = 10;
 const carPositions = [2 ,5];
 
 const offset = { x: 100, y: 100 };
+const sounds = {};
 
 // PLAY, PAUSE, LOSE
 let state = 'PLAY';
@@ -30,15 +31,28 @@ const driver = {
   ]
 }
 
-function setup() {
-  createCanvas(400, 400);
-  spawnTrafficCar();
-}
-
 let countToUpdate = 0;
 let updateInterval = 10;
 let trafficSpeed = 1;
 let score = 0;
+let levelUpScore = 500;
+
+function preload() {
+  soundFormats('wav');
+  sounds['lvlUp'] = loadSound('src/assets/lvl-up.wav');
+  sounds['hit'] = loadSound('src/assets/hit2.wav');
+  sounds['coin'] = loadSound('src/assets/coin.wav');
+  sounds['lose'] = loadSound('src/assets/lose.wav');
+  sounds['ambient'] = loadSound('src/assets/ambient.wav');
+  sounds['side'] = loadSound('src/assets/side.wav');
+  sounds['wall'] = loadSound('src/assets/wall.wav');
+  sounds['accelerate'] = loadSound('src/assets/accelerate2.wav');
+}
+
+function setup() {
+  createCanvas(400, 400);
+  initGame();
+}
 
 function draw() {
   handleKeyboardInput();
@@ -80,8 +94,6 @@ function draw() {
     textSize(12);
     text('Press ESC to restart', 60, 100);
   }
-
-  let unnapropiate = 0;
 }
 
 function initGame() {
@@ -96,6 +108,7 @@ function initGame() {
   traffic = [];
 
   spawnTrafficCar();
+  sounds['ambient'].loop();
 
   state = 'PLAY';
 }
@@ -128,9 +141,12 @@ function updateTraffic(direction = 1) {
 
 function handleDecreaseScore() {
   score -= 100;
+  sounds['hit'].play();
 
   if (score < 0) {
     if (trafficSpeed === 1 && score < 0) {
+      sounds['ambient'].stop();
+      sounds['lose'].play();
       state = 'LOSE';
     } else if (trafficSpeed > 1) {
       trafficSpeed -= 0.5;
@@ -141,8 +157,10 @@ function handleDecreaseScore() {
 
 function handleAddScore() {
   score += 100;
+  sounds['coin'].play();
 
-  if (score === 2000 && trafficSpeed < 8) {
+  if (score === levelUpScore && trafficSpeed < 8) {
+    sounds['lvlUp'].play();
     trafficSpeed += 0.5;
     score = 0;
   }
@@ -251,33 +269,50 @@ function handleKeyboardInput() {
   if (keyIsDown(UP_ARROW)) {
       if (driver.y > 0) {
         driver.y -= 1;
+        if (!sounds['accelerate'].isPlaying()) {
+          sounds['accelerate'].play();
+        }
       }
-  }
-
-  if (keyIsDown(DOWN_ARROW)) {
+  } else if (keyIsDown(DOWN_ARROW)) {
       if (driver.y * chunkSize + driver.car.length * chunkSize < roadHeight * chunkSize) {
         driver.y += 1;
+        if (!sounds['accelerate'].isPlaying()) {
+          sounds['accelerate'].play();
+        }
       }
+  } else {
+    sounds['accelerate'].stop();
   }
 }
 
 function keyPressed() {
-  console.log(keyCode);
   if (keyCode === LEFT_ARROW) {
       if (driver.x === 5) {
+        sounds['side'].play();
         driver.x = 2;
+      } else {
+        sounds['wall'].play();
       }
   }
 
   if (keyCode === RIGHT_ARROW) {
       if (driver.x === 2) {
+        sounds['side'].play();
         driver.x = 5;
+      } else {
+        sounds['wall'].play();
       }
   }
 
   if (keyCode === 27) {
-    if (state === 'PLAY') state = 'PAUSE';
-    else if (state === 'PAUSE') state = 'PLAY';
+    if (state === 'PLAY') {
+      state = 'PAUSE';
+      sounds['ambient'].pause();
+    }
+    else if (state === 'PAUSE') {
+      state = 'PLAY';
+      sounds['ambient'].loop();
+    }
     else if (state === 'LOSE') initGame();
   }
 }
