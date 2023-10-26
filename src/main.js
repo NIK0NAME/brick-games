@@ -43,7 +43,7 @@ function preload() {
   sounds['hit'] = loadSound('src/assets/hit2.wav');
   sounds['coin'] = loadSound('src/assets/coin.wav');
   sounds['lose'] = loadSound('src/assets/lose.wav');
-  sounds['ambient'] = loadSound('src/assets/ambient.wav');
+  sounds['traffic'] = loadSound('src/assets/traffic.wav');
   sounds['side'] = loadSound('src/assets/side.wav');
   sounds['wall'] = loadSound('src/assets/wall.wav');
   sounds['accelerate'] = loadSound('src/assets/accelerate2.wav');
@@ -108,9 +108,9 @@ function initGame() {
   traffic = [];
 
   spawnTrafficCar();
-  sounds['ambient'].loop();
 
   state = 'PLAY';
+  sounds['traffic'].loop();
 }
 
 function updateRoad() {
@@ -145,7 +145,7 @@ function handleDecreaseScore() {
 
   if (score < 0) {
     if (trafficSpeed === 1 && score < 0) {
-      sounds['ambient'].stop();
+      sounds['traffic'].stop();
       sounds['lose'].play();
       state = 'LOSE';
     } else if (trafficSpeed > 1) {
@@ -307,11 +307,11 @@ function keyPressed() {
   if (keyCode === 27) {
     if (state === 'PLAY') {
       state = 'PAUSE';
-      sounds['ambient'].pause();
+      sounds['traffic'].pause();
     }
     else if (state === 'PAUSE') {
       state = 'PLAY';
-      sounds['ambient'].loop();
+      sounds['traffic'].loop();
     }
     else if (state === 'LOSE') initGame();
   }
