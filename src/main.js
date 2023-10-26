@@ -75,7 +75,7 @@ function draw() {
     rect(50, 50, 280, 50);
 
     fill('red');
-    text('YOU FAKIN LOSER...', 60, 85);
+    text('YOU LOSER...', 60, 85);
   }
 }
 
