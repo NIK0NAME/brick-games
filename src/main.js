@@ -69,14 +69,19 @@ function draw() {
   translate(-offset.x, -offset.y);
 
   if (state === 'LOSE') {
-    textSize(24);
     fill('black');
     stroke('red');
-    rect(50, 50, 280, 50);
+    rect(50, 50, 280, 60);
 
+    textSize(24);
     fill('red');
     text('YOU LOSER...', 60, 85);
+
+    textSize(12);
+    text('Press ESC to restart', 60, 100);
   }
+
+  let unnapropiate = 0;
 }
 
 function initGame() {
