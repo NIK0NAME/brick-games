@@ -69,8 +69,7 @@ function draw() {
     }
   }
 
-  textSize(12);
-  text('BRICK GAMES', 100, 80);
+  drawGameIndicators();
 
   translate(offset.x, offset.y);
   drawRoad();
@@ -83,16 +82,7 @@ function draw() {
   translate(-offset.x, -offset.y);
 
   if (state === 'LOSE') {
-    fill('black');
-    stroke('red');
-    rect(50, 50, 280, 60);
-
-    textSize(24);
-    fill('red');
-    text('YOU LOSER...', 60, 85);
-
-    textSize(12);
-    text('Press ESC to restart', 60, 100);
+    drawLoseIndicator();
   }
 }
 
@@ -180,12 +170,33 @@ function spawnTrafficCar() {
   });
 }
 
+function drawGameIndicators() {
+  textSize(12);
+  text('BRICK GAMES', 100, 80);
+}
+
+function drawLoseIndicator() {
+  fill('black');
+  stroke('red');
+  rect(50, 50, 280, 60);
+
+  textSize(24);
+  fill('red');
+  text('YOU LOSER...', 60, 85);
+
+  textSize(12);
+  text('Press ESC to restart', 60, 100);
+}
+
 function drawIndicators() {
   const leftMargin = 10;
   const indicatorsX = roadWidth * chunkSize + leftMargin;
 
   text(`Speed: ${trafficSpeed}`, indicatorsX, 10);
   text(`Score: ${score}`, indicatorsX, 30);
+
+  text('User ARROWS to move', indicatorsX, 180);
+  text('User ESC to pause/resume', indicatorsX, 200);
 }
 
 function drawRoad() {
