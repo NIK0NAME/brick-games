@@ -74,8 +74,6 @@ const sketch = (sk) => {
       }
     }
 
-    drawGameIndicators();
-
     sk.translate(offset.x, offset.y);
     drawRoad();
 
@@ -175,33 +173,32 @@ const sketch = (sk) => {
     });
   }
 
-  function drawGameIndicators() {
-    sk.textSize(12);
-    sk.text('BRICK GAMES', 100, 80);
-  }
-
   function drawLoseIndicator() {
     sk.fill('black');
     sk.stroke('red');
-    sk.rect(50, 50, 280, 60);
+    sk.rect(10, 50, 235, 60);
 
     sk.textSize(24);
     sk.fill('red');
-    sk.text('YOU LOSER...', 60, 85);
+    sk.text('YOU LOSER...', 20, 80);
 
     sk.textSize(12);
-    sk.text('Press ESC to restart', 60, 100);
+    sk.text('Press ESC to restart', 20, 100);
   }
 
   function drawIndicators() {
     const leftMargin = 10;
     const indicatorsX = roadWidth * chunkSize.w + leftMargin;
 
-    sk.text(`Speed: ${trafficSpeed}`, indicatorsX, 10);
-    sk.text(`Score: ${score}`, indicatorsX, 30);
+    sk.textSize(12);
+    sk.text('Road Fighters', indicatorsX, 10);
 
-    sk.text('User ARROWS to move', indicatorsX, 180);
-    sk.text('User ESC to pause/resume', indicatorsX, 200);
+    sk.text(`Speed: ${trafficSpeed}`, indicatorsX, 30);
+    sk.text(`Score: ${score}`, indicatorsX, 50);
+
+    sk.textSize(10);
+    sk.text('ARROWS: move', indicatorsX, 180);
+    sk.text('ESC: pause/resume', indicatorsX, 200);
   }
 
   function drawRoad() {
