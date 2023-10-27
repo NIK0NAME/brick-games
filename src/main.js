@@ -4,6 +4,11 @@ import './style.css';
 
 console.log('APP READY');
 
+const consoleCase = { min: 320, max: 380 };
+
+const canvasInitialWidth = 251;
+const canvas = { w: canvasInitialWidth, h: 254 };
+
 const roadWidth = 10;
 const roadHeight = 20;
 
@@ -55,7 +60,7 @@ const sketch = (sk) => {
   // }
 
   sk.setup = () => {
-    sk.createCanvas(256, 260);
+    sk.createCanvas(canvas.w, canvas.h);
     initGame();
   }
 
@@ -332,6 +337,18 @@ const sketch = (sk) => {
       }
       else if (state === 'LOSE') initGame();
     }
+  }
+
+  sk.windowResized = () => {
+    const canvasCase = document.querySelector('#console');
+    const p5Canvas = document.querySelector('#canvas-container canvas');
+
+    console.log({ p5Canvas });
+    const newScale = (canvasCase.clientWidth * 100 / consoleCase.max) / 100;
+
+    p5Canvas.style.transform = `scale(${newScale})`;
+    
+    // sk.resizeCanvas(windowWidth, windowHeight);
   }
 }
 
