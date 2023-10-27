@@ -21,3 +21,27 @@
 body {
   margin: 0;
 }
+
+#app {
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#console {
+  position: relative;
+  height: 913px;
+  width: 394px;
+  background: url('./src/assets/console.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#canvas-container {
+  position: absolute;
+  left: 66px;
+  top: 67px;
+}

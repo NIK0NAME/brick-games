@@ -7,11 +7,11 @@ console.log('APP READY');
 const roadWidth = 10;
 const roadHeight = 20;
 
-const chunkSize = 10;
+const chunkSize = { w: 14, h: 12 };
 
 const carPositions = [2 ,5];
 
-const offset = { x: 100, y: 100 };
+const offset = { x: 9, y: 9 };
 const sounds = {};
 
 // PLAY, PAUSE, LOSE
@@ -55,7 +55,7 @@ const sketch = (sk) => {
   // }
 
   sk.setup = () => {
-    sk.createCanvas(400, 400);
+    sk.createCanvas(256, 260);
     initGame();
   }
 
@@ -120,7 +120,7 @@ const sketch = (sk) => {
 
       trafficCar.y += direction;
 
-      if (trafficCar.y * chunkSize > roadHeight * chunkSize) {
+      if (trafficCar.y * chunkSize.h > roadHeight * chunkSize.h) {
           traffic.splice(i ,1);
           handleAddScore();
           spawnTrafficCar();
@@ -195,7 +195,7 @@ const sketch = (sk) => {
 
   function drawIndicators() {
     const leftMargin = 10;
-    const indicatorsX = roadWidth * chunkSize + leftMargin;
+    const indicatorsX = roadWidth * chunkSize.w + leftMargin;
 
     sk.text(`Speed: ${trafficSpeed}`, indicatorsX, 10);
     sk.text(`Score: ${score}`, indicatorsX, 30);
@@ -211,12 +211,12 @@ const sketch = (sk) => {
           sk.fill('#1e1f0f');
           sk.stroke('#676f58');
           sk.strokeWeight(1);
-          sk.rect(x * chunkSize, y * chunkSize, chunkSize, chunkSize);
+          sk.rect(x * chunkSize.w, y * chunkSize.h, chunkSize.w, chunkSize.h);
         } else {
           sk.fill('#838d72');
           sk.stroke('#859373');
           sk.strokeWeight(1);
-          sk.rect(x * chunkSize, y * chunkSize, chunkSize, chunkSize);
+          sk.rect(x * chunkSize.w, y * chunkSize.h, chunkSize.w, chunkSize.h);
         }
       }
     }
@@ -224,7 +224,7 @@ const sketch = (sk) => {
     sk.noFill();
     sk.stroke('#000');
     sk.strokeWeight(1);
-    sk.rect(0, 0, roadWidth * chunkSize, roadHeight * chunkSize);
+    sk.rect(0, 0, roadWidth * chunkSize.w, roadHeight * chunkSize.h);
   }
 
   function drawDriver() {
@@ -245,17 +245,17 @@ const sketch = (sk) => {
       for (let x = 0; x < car[0].length; x++) {
         if (
           car[y][x] == 1 &&
-          vehicle.y * chunkSize + y * chunkSize >= 0 &&
-          vehicle.y * chunkSize + y * chunkSize < roadHeight * chunkSize
+          vehicle.y * chunkSize.h + y * chunkSize.h >= 0 &&
+          vehicle.y * chunkSize.h + y * chunkSize.h < roadHeight * chunkSize.h
         ) {
           sk.fill(fillColor);
           sk.stroke(strokeColor);
           sk.strokeWeight(1);
           sk.rect(
-            vehicle.x * chunkSize + x * chunkSize,
-            vehicle.y * chunkSize + y * chunkSize,
-            chunkSize,
-            chunkSize
+            vehicle.x * chunkSize.w + x * chunkSize.w,
+            vehicle.y * chunkSize.h + y * chunkSize.h,
+            chunkSize.w,
+            chunkSize.h
           );
         }
       }
@@ -292,7 +292,7 @@ const sketch = (sk) => {
           // }
         }
     } else if (sk.keyIsDown(sk.DOWN_ARROW)) {
-        if (driver.y * chunkSize + driver.car.length * chunkSize < roadHeight * chunkSize) {
+        if (driver.y * chunkSize.h + driver.car.length * chunkSize.h < roadHeight * chunkSize.h) {
           driver.y += 1;
           // if (!sounds['accelerate'].isPlaying()) {
           //   sounds['accelerate'].play();
@@ -338,4 +338,4 @@ const sketch = (sk) => {
   }
 }
 
-const P5 = new p5(sketch);
+const P5 = new p5(sketch, 'canvas-container');
