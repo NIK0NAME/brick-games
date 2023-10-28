@@ -6,8 +6,8 @@ console.log('APP READY');
 
 const consoleCase = { min: 320, max: 380 };
 
-const canvasInitialWidth = 251;
-const canvas = { w: canvasInitialWidth, h: 254 };
+const canvasInitialSize = { w: 251, h: 254 };
+const canvas = { w: canvasInitialSize.w, h: canvasInitialSize.h };
 
 const roadWidth = 10;
 const roadHeight = 20;
@@ -61,6 +61,7 @@ const sketch = (sk) => {
 
   sk.setup = () => {
     sk.createCanvas(canvas.w, canvas.h);
+    calcCanvasScaleAndTranslate();
     initGame();
   }
 
@@ -339,16 +340,20 @@ const sketch = (sk) => {
     }
   }
 
-  sk.windowResized = () => {
+  function calcCanvasScaleAndTranslate() {
     const canvasCase = document.querySelector('#console');
-    const p5Canvas = document.querySelector('#canvas-container canvas');
+    const p5CanvasContainer = document.querySelector('#canvas-container');
+    const p5Canvas = p5CanvasContainer.querySelector('canvas');
 
-    console.log({ p5Canvas });
-    const newScale = (canvasCase.clientWidth * 100 / consoleCase.max) / 100;
+    const canvasScale = (canvasCase.clientWidth * 100 / consoleCase.max) / 100;
 
-    p5Canvas.style.transform = `scale(${newScale})`;
-    
-    // sk.resizeCanvas(windowWidth, windowHeight);
+    const newTranslateX = canvasInitialSize.w - (canvasInitialSize.w * canvasScale);
+    const newTranslateY = canvasInitialSize.h - (canvasInitialSize.h * canvasScale);
+    p5Canvas.style.transform = `scale(${canvasScale}) translate(-${newTranslateX}px, -${newTranslateY}px)`;
+  }
+
+  sk.windowResized = () => {
+    calcCanvasScaleAndTranslate();
   }
 }
 
