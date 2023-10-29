@@ -29,11 +29,11 @@ export default class RoadFighters {
     this.score = 0;
     this.levelUpScore = 500;
 
-    this.initGame();
+    this.init();
   }
 
   setup() {
-    this.initGame();
+    this.init();
   }
 
   splash() {
@@ -72,7 +72,7 @@ export default class RoadFighters {
     }
   }
 
-  initGame() {
+  init() {
     this.countToUpdate = 0;
     this.updateInterval = 10;
     this.trafficSpeed = 1;
@@ -327,7 +327,7 @@ export default class RoadFighters {
         this.state = 'PLAY';
         // sounds['traffic'].loop();
       }
-      else if (this.state === 'LOSE') this.initGame();
+      else if (this.state === 'LOSE') this.init();
     }
   }
 }

@@ -49,7 +49,7 @@ export default class Menu {
 
     if (keyCode === 13) {
       this.selectedGame = this.focusedGame;
-      this.games[this.selectedGame].initGame();
+      this.games[this.selectedGame].init();
     }
   }
 
