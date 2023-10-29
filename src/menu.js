@@ -1,6 +1,10 @@
 class Menu {
-  constructor() {
-
+  constructor(sk) {
+    this.sk = sk;
+    this.selectedGame = null;
+    this.games = [
+      { name: 'Road Fighters' },
+    ];
   }
 
   update() {
@@ -9,5 +13,9 @@ class Menu {
 
   draw() {
     
+  }
+
+  splash() {
+
   }
 }

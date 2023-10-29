@@ -65,6 +65,7 @@ const sketch = (sk) => {
     initGame();
   }
 
+  // moved
   sk.draw = () => {
     handleKeyboardInput();
 
@@ -95,6 +96,7 @@ const sketch = (sk) => {
     }
   }
 
+  // moved
   function initGame() {
     countToUpdate = 0;
     updateInterval = 10;
@@ -112,11 +114,13 @@ const sketch = (sk) => {
     // sounds['traffic'].loop();
   }
 
+  // moved
   function updateRoad() {
     const elementToAppend = road.splice(road.length - 1, 1);
     road = [...elementToAppend, ...road];
   }
 
+  // moved
   function updateTraffic(direction = 1) {
     for (let i = traffic.length - 1; i >= 0; i--) {
       const trafficCar = traffic[i];
@@ -138,6 +142,7 @@ const sketch = (sk) => {
     }
   }
 
+  // moved
   function handleDecreaseScore() {
     score -= 100;
     // sounds['hit'].play();
@@ -154,6 +159,7 @@ const sketch = (sk) => {
     }
   }
 
+  // moved
   function handleAddScore() {
     score += 100;
     // sounds['coin'].play();
@@ -165,6 +171,7 @@ const sketch = (sk) => {
     }
   }
 
+  // moved
   function spawnTrafficCar() {
     const xPosition = sk.random(carPositions);
     traffic.push({
@@ -179,6 +186,7 @@ const sketch = (sk) => {
     });
   }
 
+  // moved
   function drawLoseIndicator() {
     sk.fill('black');
     sk.stroke('red');
@@ -192,6 +200,7 @@ const sketch = (sk) => {
     sk.text('Press ESC to restart', 20, 100);
   }
 
+  // moved
   function drawIndicators() {
     const leftMargin = 10;
     const indicatorsX = roadWidth * chunkSize.w + leftMargin;
@@ -207,6 +216,7 @@ const sketch = (sk) => {
     sk.text('ESC: pause/resume', indicatorsX, 200);
   }
 
+  // moved
   function drawRoad() {
     for (let y = 0; y < roadHeight; y++) {
       for (let x = 0; x < roadWidth; x++) {
@@ -230,6 +240,7 @@ const sketch = (sk) => {
     sk.rect(0, 0, roadWidth * chunkSize.w, roadHeight * chunkSize.h);
   }
 
+  // moved
   function drawDriver() {
     drawCar({
       vehicle: driver,
@@ -240,6 +251,7 @@ const sketch = (sk) => {
     });
   }
 
+  // moved
   function drawCar(data) {
     const { vehicle, colors } = data;
     const { car } = vehicle;
@@ -265,6 +277,7 @@ const sketch = (sk) => {
     }
   }
 
+  // moved
   function drawTraffic() {
     for (const trafficCar of traffic) {
       drawCar({
@@ -277,6 +290,7 @@ const sketch = (sk) => {
     }
   }
 
+  // moved
   function checkCollision(a, b) {
     return (
       a.x === b.x &&
@@ -284,6 +298,7 @@ const sketch = (sk) => {
     );
   }
 
+  // moved
   function handleKeyboardInput() {
     if (state !== 'PLAY') return;
 
@@ -306,6 +321,7 @@ const sketch = (sk) => {
     }
   }
 
+  // moved
   sk.keyPressed = () => {
     if (state === 'PLAY') {
       if (sk.keyCode === sk.LEFT_ARROW) {
