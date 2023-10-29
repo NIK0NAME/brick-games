@@ -1,14 +1,12 @@
-class Menu {
+import RoadFighters from './road-fighters';
+
+export default class Menu {
   constructor(sk) {
     this.sk = sk;
-    this.selectedGame = null;
+    this.selectedGame = 0;
     this.games = [
-      { name: 'Road Fighters' },
+      { name: 'Road Fighters', game: new RoadFighters(sk) },
     ];
-  }
-
-  update() {
-
   }
 
   draw() {
@@ -16,6 +14,10 @@ class Menu {
   }
 
   splash() {
+
+  }
+
+  handleKeyPress(keyCode) {
 
   }
 }

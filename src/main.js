@@ -1,6 +1,6 @@
 import p5 from 'p5';
 import 'p5/lib/addons/p5.sound';
-import RoadFighters from './road-fighters';
+import Menu from './menu';
 import './style.css';
 
 console.log('APP READY');
@@ -11,7 +11,7 @@ const canvasInitialSize = { w: 251, h: 254 };
 const canvas = { w: canvasInitialSize.w, h: canvasInitialSize.h };
 
 const sketch = (sk) => {
-  const roadFighters = new RoadFighters(sk);
+  const gameMenu = new Menu(sk);
   // sk.preload = () => {
   //   sk.soundFormats('wav');
   //   sounds['lvlUp'] = loadSound('src/assets/lvl-up.wav');
@@ -30,11 +30,19 @@ const sketch = (sk) => {
   }
 
   sk.draw = () => {
-    roadFighters.draw();
+    if (gameMenu.selectedGame === null) {
+      gameMenu.draw();
+    } else {
+      gameMenu.games[gameMenu.selectedGame].game.draw();
+    }
   }
 
   sk.keyPressed = () => {
-    roadFighters.handleKeyPress(sk.keyCode);
+    if (gameMenu.selectedGame === null) {
+      gameMenu.handleKeyPress(sk.keyCode);
+    } else {
+      gameMenu.games[gameMenu.selectedGame].game.handleKeyPress(sk.keyCode);
+    }
   }
 
   function calcCanvasScaleAndTranslate() {
