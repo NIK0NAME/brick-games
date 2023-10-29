@@ -1,5 +1,6 @@
 export default class RoadFighters {
   constructor(sk) {
+    this.name = 'Road Fighters';
     this.sk = sk;
     this.offset = { x: 9, y: 9 };
     this.chunkSize = { w: 14, h: 12 };
@@ -33,6 +34,12 @@ export default class RoadFighters {
 
   setup() {
     this.initGame();
+  }
+
+  splash() {
+    this.sk.fill('#676f58');
+    this.sk.stroke('#1e1f0f');
+    this.sk.text(`${this.name}`, 10, 50);
   }
 
   draw() {

@@ -30,19 +30,11 @@ const sketch = (sk) => {
   }
 
   sk.draw = () => {
-    if (gameMenu.selectedGame === null) {
-      gameMenu.draw();
-    } else {
-      gameMenu.games[gameMenu.selectedGame].game.draw();
-    }
+    gameMenu.draw();
   }
 
   sk.keyPressed = () => {
-    if (gameMenu.selectedGame === null) {
-      gameMenu.handleKeyPress(sk.keyCode);
-    } else {
-      gameMenu.games[gameMenu.selectedGame].game.handleKeyPress(sk.keyCode);
-    }
+    gameMenu.handleKeyPress(sk.keyCode);
   }
 
   function calcCanvasScaleAndTranslate() {
