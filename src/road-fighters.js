@@ -1,5 +1,7 @@
-class RoadFighters {
-  constructor() {
+export default class RoadFighters {
+  constructor(sk) {
+    this.sk = sk;
+    this.offset = { x: 9, y: 9 };
     this.chunkSize = { w: 14, h: 12 };
     this.roadWidth = 10;
     this.roadHeight = 20;
@@ -25,10 +27,12 @@ class RoadFighters {
     this.trafficSpeed = 1;
     this.score = 0;
     this.levelUpScore = 500;
+
+    this.initGame();
   }
 
   setup() {
-    initGame();
+    this.initGame();
   }
 
   draw() {
@@ -46,7 +50,7 @@ class RoadFighters {
       }
     }
 
-    this.sk.translate(offset.x, offset.y);
+    this.sk.translate(this.offset.x, this.offset.y);
     this.drawRoad();
 
     this.drawTraffic();
@@ -54,7 +58,7 @@ class RoadFighters {
     this.drawDriver();
 
     this.drawIndicators();
-    this.sk.translate(-offset.x, -offset.y);
+    this.sk.translate(-this.offset.x, -this.offset.y);
 
     if (this.state === 'LOSE') {
       this.drawLoseIndicator();
@@ -105,7 +109,7 @@ class RoadFighters {
   }
 
   spawnTrafficCar() {
-    const xPosition = this.sk.random(carPositions);
+    const xPosition = this.sk.random(this.carPositions);
     this.traffic.push({
       x: xPosition,
       y: -4,
@@ -146,7 +150,7 @@ class RoadFighters {
   }
 
   spawnTrafficCar() {
-    const xPosition = this.sk.random(carPositions);
+    const xPosition = this.sk.random(this.carPositions);
     this.traffic.push({
       x: xPosition,
       y: -4,
@@ -211,7 +215,7 @@ class RoadFighters {
   }
 
   drawDriver() {
-    drawCar({
+    this.drawCar({
       vehicle: this.driver,
       colors: {
         strokeColor: '#676f58',
@@ -283,6 +287,40 @@ class RoadFighters {
         }
     } else {
       // sounds['accelerate'].stop();
+    }
+  }
+
+  handleKeyPress(keyCode) {
+    if (this.state === 'PLAY') {
+      if (keyCode === this.sk.LEFT_ARROW) {
+          if (this.driver.x === 5) {
+            // sounds['side'].play();
+            this.driver.x = 2;
+          } else {
+            // sounds['wall'].play();
+          }
+      }
+
+      if (keyCode === this.sk.RIGHT_ARROW) {
+          if (this.driver.x === 2) {
+            // sounds['side'].play();
+            this.driver.x = 5;
+          } else {
+            // sounds['wall'].play();
+          }
+      }
+    }
+
+    if (keyCode === 27) {
+      if (this.state === 'PLAY') {
+        this.state = 'PAUSE';
+        // sounds['traffic'].pause();
+      }
+      else if (this.state === 'PAUSE') {
+        this.state = 'PLAY';
+        // sounds['traffic'].loop();
+      }
+      else if (this.state === 'LOSE') this.initGame();
     }
   }
 }
