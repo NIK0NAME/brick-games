@@ -30,6 +30,7 @@ export default class Menu {
   }
 
   handleMenuKeyPress(keyCode) {
+    console.log(keyCode);
     if (keyCode === this.sk.LEFT_ARROW) {
       this.focusedGame -= 1;
   
@@ -45,13 +46,21 @@ export default class Menu {
         this.focusedGame = 0;
       }
     }
+
+    if (keyCode === 13) {
+      this.selectedGame = this.focusedGame;
+      this.games[this.selectedGame].initGame();
+    }
   }
 
   handleKeyPress(keyCode) {
+    if (keyCode === 27) {
+      this.selectedGame = null;
+    }
     if (this.selectedGame === null) {
       this.handleMenuKeyPress(keyCode);
     } else {
-      this.games[this.selectedGame].game.handleKeyPress(keyCode);
+      this.games[this.selectedGame].handleKeyPress(keyCode);
     }
   }
 }

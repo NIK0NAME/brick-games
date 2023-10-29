@@ -318,7 +318,7 @@ export default class RoadFighters {
       }
     }
 
-    if (keyCode === 27) {
+    if (keyCode === 80) {
       if (this.state === 'PLAY') {
         this.state = 'PAUSE';
         // sounds['traffic'].pause();
