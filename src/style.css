@@ -29,11 +29,13 @@ body {
 }
 
 #console {
-  position: relative;
+  position: fixed;
   margin: 5px auto 0px auto;
   width: 100%;
-  min-width: 320px;
-  max-width: 380px;
+  width: 380px;
+
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 #console-case {

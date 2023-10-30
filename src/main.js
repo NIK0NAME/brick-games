@@ -36,22 +36,6 @@ const sketch = (sk) => {
   sk.keyPressed = () => {
     gameMenu.handleKeyPress(sk.keyCode);
   }
-
-  function calcCanvasScaleAndTranslate() {
-    const canvasCase = document.querySelector('#console');
-    const p5CanvasContainer = document.querySelector('#canvas-container');
-    const p5Canvas = p5CanvasContainer.querySelector('canvas');
-
-    const canvasScale = (canvasCase.clientWidth * 100 / consoleCase.max) / 100;
-
-    const newTranslateX = canvasInitialSize.w - (canvasInitialSize.w * canvasScale);
-    const newTranslateY = canvasInitialSize.h - (canvasInitialSize.h * canvasScale);
-    p5Canvas.style.transform = `scale(${canvasScale}) translate(-${newTranslateX}px, -${newTranslateY}px)`;
-  }
-
-  sk.windowResized = () => {
-    calcCanvasScaleAndTranslate();
-  }
 }
 
 const P5 = new p5(sketch, 'canvas-container');
