@@ -23,6 +23,11 @@ body {
   overflow: hidden;
 }
 
+area {
+  display: block;
+  background-color:pink;
+}
+
 #app {
   width: 100%;
   height: 100vh;

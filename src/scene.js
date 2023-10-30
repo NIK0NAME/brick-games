@@ -1,11 +1,11 @@
 export default class Scene {
   constructor(sk, props = null) {
     this.sk = sk;
-    this.brickSize = { w: 14, h: 12 };
+    this.brickSize = { w: 12, h: 12 };
     this.gameCanvasOffset = { x: 9, y: 9 };
     this.color = {
-      background: '#838d72',
-      foreground: '#859373',
+      background: '#859373',
+      foreground: '#838d72',
     };
   }
 

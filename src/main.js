@@ -35,6 +35,12 @@ const sketch = (sk) => {
   sk.keyPressed = () => {
     gameMenu.handleKeyPress(sk.keyCode);
   }
+
+  document.querySelectorAll('.console-button').forEach((element) => {
+    element.addEventListener('click', () => {
+      console.log('console-case button pressed', element);
+    });
+  });
 }
 
 const P5 = new p5(sketch, 'canvas-container');
