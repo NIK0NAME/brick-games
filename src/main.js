@@ -1,6 +1,7 @@
 import p5 from 'p5';
 import 'p5/lib/addons/p5.sound';
 import Menu from './menu';
+import { KEYBOARD_KEYS } from './constants';
 import './style.css';
 
 console.log('APP READY');
@@ -38,15 +39,14 @@ const sketch = (sk) => {
 
   document.querySelectorAll('.console-button').forEach((element) => {
     element.addEventListener('click', () => {
-      console.log('console-case button pressed', {element});
       switch (element.title) {
-        case 'left': gameMenu.handleKeyPress(37); break;
-        case 'right': gameMenu.handleKeyPress(39); break;
-        case 'up': gameMenu.handleKeyPress(38); break;
-        case 'down': gameMenu.handleKeyPress(40); break;
-        case 'rotate': gameMenu.handleKeyPress(13); break;
-        case 'off': gameMenu.handleKeyPress(27); break;
-        case 'sp': gameMenu.handleKeyPress(80); break;
+        case 'left': gameMenu.handleKeyPress(KEYBOARD_KEYS.LEFT_ARROW); break;
+        case 'right': gameMenu.handleKeyPress(KEYBOARD_KEYS.RIGHT_ARROW); break;
+        case 'up': gameMenu.handleKeyPress(KEYBOARD_KEYS.UP_ARROW); break;
+        case 'down': gameMenu.handleKeyPress(KEYBOARD_KEYS.DOWN_ARROW); break;
+        case 'rotate': gameMenu.handleKeyPress(KEYBOARD_KEYS.ENTER); break;
+        case 'off': gameMenu.handleKeyPress(KEYBOARD_KEYS.ESCAPE); break;
+        case 'sp': gameMenu.handleKeyPress(KEYBOARD_KEYS.P_KEY); break;
       }
     });
   });

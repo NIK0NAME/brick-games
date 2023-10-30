@@ -1,3 +1,4 @@
+import { KEYBOARD_KEYS } from './constants';
 import RoadFighters from './road-fighters';
 import Snake from './snake';
 
@@ -47,14 +48,14 @@ export default class Menu {
       }
     }
 
-    if (keyCode === 13) {
+    if (keyCode === KEYBOARD_KEYS.ENTER) {
       this.selectedGame = this.focusedGame;
       this.games[this.selectedGame].init();
     }
   }
 
   handleKeyPress(keyCode) {
-    if (keyCode === 27) {
+    if (keyCode === KEYBOARD_KEYS.ESCAPE) {
       this.selectedGame = null;
     }
     if (this.selectedGame === null) {

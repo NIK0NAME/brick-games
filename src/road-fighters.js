@@ -1,3 +1,4 @@
+import { KEYBOARD_KEYS } from './constants';
 import Scene from './scene';
 
 export default class RoadFighters extends Scene {
@@ -312,7 +313,7 @@ export default class RoadFighters extends Scene {
       }
     }
 
-    if (keyCode === 80) {
+    if (keyCode === KEYBOARD_KEYS.P_KEY) {
       if (this.state === 'PLAY') {
         this.state = 'PAUSE';
         // sounds['traffic'].pause();
