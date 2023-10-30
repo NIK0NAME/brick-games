@@ -1,9 +1,11 @@
-export default class RoadFighters {
+import Scene from './scene';
+
+export default class RoadFighters extends Scene {
   constructor(sk) {
+    super(sk);
     this.name = 'Road Fighters';
     this.sk = sk;
-    this.offset = { x: 9, y: 9 };
-    this.chunkSize = { w: 14, h: 12 };
+    this.gameCanvasOffset = { x: 9, y: 9 };
     this.roadWidth = 10;
     this.roadHeight = 20;
     this.carPositions = [2 ,5];
@@ -45,7 +47,7 @@ export default class RoadFighters {
   draw() {
     this.handleKeyboardInput();
 
-    this.sk.background('#a7a994');
+    this.drawGameCanvas();
 
     if (this.state === 'PLAY') {
       this.countToUpdate += this.trafficSpeed;
@@ -57,7 +59,7 @@ export default class RoadFighters {
       }
     }
 
-    this.sk.translate(this.offset.x, this.offset.y);
+    this.sk.translate(this.gameCanvasOffset.x, this.gameCanvasOffset.y);
     this.drawRoad();
 
     this.drawTraffic();
@@ -65,7 +67,7 @@ export default class RoadFighters {
     this.drawDriver();
 
     this.drawIndicators();
-    this.sk.translate(-this.offset.x, -this.offset.y);
+    this.sk.translate(-this.gameCanvasOffset.x, -this.gameCanvasOffset.y);
 
     if (this.state === 'LOSE') {
       this.drawLoseIndicator();
@@ -101,7 +103,7 @@ export default class RoadFighters {
 
       trafficCar.y += direction;
 
-      if (trafficCar.y * this.chunkSize.h > this.roadHeight * this.chunkSize.h) {
+      if (trafficCar.y * this.brickSize.h > this.roadHeight * this.brickSize.h) {
           this.traffic.splice(i ,1);
           this.handleAddScore();
           this.spawnTrafficCar();
@@ -185,7 +187,7 @@ export default class RoadFighters {
 
   drawIndicators() {
     const leftMargin = 10;
-    const indicatorsX = this.roadWidth * this.chunkSize.w + leftMargin;
+    const indicatorsX = this.roadWidth * this.brickSize.w + leftMargin;
 
     this.sk.textSize(12);
     this.sk.text('Road Fighters', indicatorsX, 10);
@@ -202,23 +204,19 @@ export default class RoadFighters {
     for (let y = 0; y < this.roadHeight; y++) {
       for (let x = 0; x < this.roadWidth; x++) {
         if ((x === 0 || x === this.roadWidth - 1) && this.road[y] === 1) {
-          this.sk.fill('#1e1f0f');
-          this.sk.stroke('#676f58');
-          this.sk.strokeWeight(1);
-          this.sk.rect(x * this.chunkSize.w, y * this.chunkSize.h, this.chunkSize.w, this.chunkSize.h);
+          this.drawBrick({
+            x: x * this.brickSize.w,
+            y: y * this.brickSize.h,
+            color: '#1e1f0f'
+          });
         } else {
-          this.sk.fill('#838d72');
-          this.sk.stroke('#859373');
-          this.sk.strokeWeight(1);
-          this.sk.rect(x * this.chunkSize.w, y * this.chunkSize.h, this.chunkSize.w, this.chunkSize.h);
+          this.drawBrick({
+            x: x * this.brickSize.w,
+            y: y * this.brickSize.h,
+          });
         }
       }
     }
-
-    this.sk.noFill();
-    this.sk.stroke('#000');
-    this.sk.strokeWeight(1);
-    this.sk.rect(0, 0, this.roadWidth * this.chunkSize.w, this.roadHeight * this.chunkSize.h);
   }
 
   drawDriver() {
@@ -239,18 +237,14 @@ export default class RoadFighters {
       for (let x = 0; x < car[0].length; x++) {
         if (
           car[y][x] == 1 &&
-          vehicle.y * this.chunkSize.h + y * this.chunkSize.h >= 0 &&
-          vehicle.y * this.chunkSize.h + y * this.chunkSize.h < this.roadHeight * this.chunkSize.h
+          vehicle.y * this.brickSize.h + y * this.brickSize.h >= 0 &&
+          vehicle.y * this.brickSize.h + y * this.brickSize.h < this.roadHeight * this.brickSize.h
         ) {
-          this.sk.fill(fillColor);
-          this.sk.stroke(strokeColor);
-          this.sk.strokeWeight(1);
-          this.sk.rect(
-            vehicle.x * this.chunkSize.w + x * this.chunkSize.w,
-            vehicle.y * this.chunkSize.h + y * this.chunkSize.h,
-            this.chunkSize.w,
-            this.chunkSize.h
-          );
+          this.drawBrick({
+            x: vehicle.x * this.brickSize.w + x * this.brickSize.w,
+            y: vehicle.y * this.brickSize.h + y * this.brickSize.h,
+            color: fillColor,
+          });
         }
       }
     }
@@ -286,7 +280,7 @@ export default class RoadFighters {
           // }
         }
     } else if (this.sk.keyIsDown(this.sk.DOWN_ARROW)) {
-        if (this.driver.y * this.chunkSize.h + this.driver.car.length * this.chunkSize.h < this.roadHeight * this.chunkSize.h) {
+        if (this.driver.y * this.brickSize.h + this.driver.car.length * this.brickSize.h < this.roadHeight * this.brickSize.h) {
           this.driver.y += 1;
           // if (!sounds['accelerate'].isPlaying()) {
           //   sounds['accelerate'].play();

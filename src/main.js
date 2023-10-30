@@ -26,7 +26,6 @@ const sketch = (sk) => {
 
   sk.setup = () => {
     sk.createCanvas(canvas.w, canvas.h);
-    calcCanvasScaleAndTranslate();
   }
 
   sk.draw = () => {
