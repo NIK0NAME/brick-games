@@ -1,9 +1,11 @@
 import { KEYBOARD_KEYS } from './constants';
 import RoadFighters from './road-fighters';
+import Scene from './scene';
 import Snake from './snake';
 
-export default class Menu {
+export default class Menu extends Scene {
   constructor(sk) {
+    super(sk);
     this.sk = sk;
     this.selectedGame = null;
     this.focusedGame = 0;
@@ -15,6 +17,7 @@ export default class Menu {
 
   draw() {
     this.sk.background('#a7a994');
+    this.drawGameCanvas();
     if (this.selectedGame === null) {
       this.drawMenu();
     } else {
@@ -23,11 +26,22 @@ export default class Menu {
   }
 
   drawMenu() {
-    this.games[this.focusedGame].splash();
+    this.gameSplash(this.games[this.focusedGame]);
   }
 
   splash() {
 
+  }
+
+  gameSplash(game) {
+    this.sk.fill('#676f58');
+    this.sk.stroke('#1e1f0f');
+    this.sk.strokeWeight(5);
+    this.sk.text(
+      `${game.name}`,
+      this.gameCanvasOffset.x + this.gameCanvasSize.w * this.brickSize.w + 10,
+      this.gameCanvasOffset.y + 12
+    );
   }
 
   handleMenuKeyPress(keyCode) {

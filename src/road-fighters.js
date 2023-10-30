@@ -6,9 +6,6 @@ export default class RoadFighters extends Scene {
     super(sk);
     this.name = 'Road Fighters';
     this.sk = sk;
-    this.gameCanvasOffset = { x: 9, y: 9 };
-    this.roadWidth = 10;
-    this.roadHeight = 20;
     this.carPositions = [2 ,5];
     this.state = 'PLAY';
     this.road = [
@@ -35,20 +32,21 @@ export default class RoadFighters extends Scene {
     this.init();
   }
 
-  setup() {
-    this.init();
-  }
-
   splash() {
     this.sk.fill('#676f58');
     this.sk.stroke('#1e1f0f');
-    this.sk.text(`${this.name}`, 10, 50);
+    this.sk.strokeWeight(5);
+    this.sk.text(
+      `${this.name}`,
+      this.gameCanvasOffset.x + this.gameCanvasSize.w * this.brickSize.w + 10,
+      this.gameCanvasOffset.y + 12
+    );
   }
 
   draw() {
     this.handleKeyboardInput();
 
-    this.drawGameCanvas();
+    // this.drawGameCanvas();
 
     if (this.state === 'PLAY') {
       this.countToUpdate += this.trafficSpeed;
@@ -104,7 +102,7 @@ export default class RoadFighters extends Scene {
 
       trafficCar.y += direction;
 
-      if (trafficCar.y * this.brickSize.h > this.roadHeight * this.brickSize.h) {
+      if (trafficCar.y * this.brickSize.h > this.gameCanvasSize.h * this.brickSize.h) {
           this.traffic.splice(i ,1);
           this.handleAddScore();
           this.spawnTrafficCar();
@@ -188,7 +186,7 @@ export default class RoadFighters extends Scene {
 
   drawIndicators() {
     const leftMargin = 10;
-    const indicatorsX = this.roadWidth * this.brickSize.w + leftMargin;
+    const indicatorsX = this.gameCanvasSize.w * this.brickSize.w + leftMargin;
 
     this.sk.textSize(12);
     this.sk.text('Road Fighters', indicatorsX, 10);
@@ -202,9 +200,9 @@ export default class RoadFighters extends Scene {
   }
 
   drawRoad() {
-    for (let y = 0; y < this.roadHeight; y++) {
-      for (let x = 0; x < this.roadWidth; x++) {
-        if ((x === 0 || x === this.roadWidth - 1) && this.road[y] === 1) {
+    for (let y = 0; y < this.gameCanvasSize.h; y++) {
+      for (let x = 0; x < this.gameCanvasSize.w; x++) {
+        if ((x === 0 || x === this.gameCanvasSize.w - 1) && this.road[y] === 1) {
           this.drawBrick({
             x: x * this.brickSize.w,
             y: y * this.brickSize.h,
@@ -239,7 +237,7 @@ export default class RoadFighters extends Scene {
         if (
           car[y][x] == 1 &&
           vehicle.y * this.brickSize.h + y * this.brickSize.h >= 0 &&
-          vehicle.y * this.brickSize.h + y * this.brickSize.h < this.roadHeight * this.brickSize.h
+          vehicle.y * this.brickSize.h + y * this.brickSize.h < this.gameCanvasSize.h * this.brickSize.h
         ) {
           this.drawBrick({
             x: vehicle.x * this.brickSize.w + x * this.brickSize.w,
@@ -281,7 +279,7 @@ export default class RoadFighters extends Scene {
           // }
         }
     } else if (this.sk.keyIsDown(this.sk.DOWN_ARROW)) {
-        if (this.driver.y * this.brickSize.h + this.driver.car.length * this.brickSize.h < this.roadHeight * this.brickSize.h) {
+        if (this.driver.y * this.brickSize.h + this.driver.car.length * this.brickSize.h < this.gameCanvasSize.h * this.brickSize.h) {
           this.driver.y += 1;
           // if (!sounds['accelerate'].isPlaying()) {
           //   sounds['accelerate'].play();

@@ -3,6 +3,7 @@ export default class Scene {
     this.sk = sk;
     this.brickSize = { w: 12, h: 12 };
     this.gameCanvasOffset = { x: 9, y: 9 };
+    this.gameCanvasSize = { w: 10, h: 20 };
     this.color = {
       background: '#859373',
       foreground: '#838d72',
@@ -34,8 +35,18 @@ export default class Scene {
     this.sk.background('#838d72');
     this.sk.noStroke();
     this.sk.fill('#000');
-    this.sk.rect(this.gameCanvasOffset.x - 2, this.gameCanvasOffset.y - 2, this.roadWidth * this.brickSize.w + 4, this.roadHeight * this.brickSize.h + 4);
+    this.sk.rect(
+      this.gameCanvasOffset.x - 2,
+      this.gameCanvasOffset.y - 2,
+      this.gameCanvasSize.w * this.brickSize.w + 4,
+      this.gameCanvasSize.h * this.brickSize.h + 4
+    );
     this.sk.fill('#838d72');
-    this.sk.rect(this.gameCanvasOffset.x - 1, this.gameCanvasOffset.y - 1, this.roadWidth * this.brickSize.w + 2, this.roadHeight * this.brickSize.h + 2);
+    this.sk.rect(
+      this.gameCanvasOffset.x - 1,
+      this.gameCanvasOffset.y - 1,
+      this.gameCanvasSize.w * this.brickSize.w + 2,
+      this.gameCanvasSize.h * this.brickSize.h + 2
+    );
   }
 }
