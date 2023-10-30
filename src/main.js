@@ -38,7 +38,16 @@ const sketch = (sk) => {
 
   document.querySelectorAll('.console-button').forEach((element) => {
     element.addEventListener('click', () => {
-      console.log('console-case button pressed', element);
+      console.log('console-case button pressed', {element});
+      switch (element.title) {
+        case 'left': gameMenu.handleKeyPress(37); break;
+        case 'right': gameMenu.handleKeyPress(39); break;
+        case 'up': gameMenu.handleKeyPress(38); break;
+        case 'down': gameMenu.handleKeyPress(40); break;
+        case 'rotate': gameMenu.handleKeyPress(13); break;
+        case 'off': gameMenu.handleKeyPress(27); break;
+        case 'sp': gameMenu.handleKeyPress(80); break;
+      }
     });
   });
 }
