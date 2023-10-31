@@ -15,7 +15,7 @@ export default class RoadFighters extends Scene {
     this.trafic = [];
     this.driver = {
       x: 2,
-      y: 8,
+      y: 16,
       car: [
         [0, 1, 0],
         [1, 1, 1],
@@ -28,6 +28,7 @@ export default class RoadFighters extends Scene {
     this.trafficSpeed = 1;
     this.score = 0;
     this.levelUpScore = 500;
+    this.updatedBricksCount = 0;
 
     this.init();
   }
@@ -52,7 +53,12 @@ export default class RoadFighters extends Scene {
       this.countToUpdate += this.trafficSpeed;
 
       if (this.countToUpdate >= this.updateInterval) {
+        this.updatedBricksCount++;
+        if (this.updatedBricksCount >= this.gameCanvasSize.h) {
+          this.updatedBricksCount = 0;
+        }
         this.countToUpdate = 0;
+        this.spawnTrafficCar();
         this.updateRoad();
         this.updateTraffic();
       }
@@ -80,11 +86,9 @@ export default class RoadFighters extends Scene {
     this.score = 0;
 
     this.driver.x = 2;
-    this.driver.y = 8;
+    this.driver.y = 16;
 
     this.traffic = [];
-
-    this.spawnTrafficCar();
 
     this.state = 'PLAY';
     // sounds['traffic'].loop();
@@ -105,29 +109,29 @@ export default class RoadFighters extends Scene {
       if (trafficCar.y * this.brickSize.h > this.gameCanvasSize.h * this.brickSize.h) {
           this.traffic.splice(i ,1);
           this.handleAddScore();
-          this.spawnTrafficCar();
       } else {
         if (this.checkCollision(trafficCar, this.driver)) {
           this.traffic.splice(i ,1);
           this.handleDecreaseScore();
-          this.spawnTrafficCar();
         }
       }
     }
   }
 
   spawnTrafficCar() {
-    const xPosition = this.sk.random(this.carPositions);
-    this.traffic.push({
-      x: xPosition,
-      y: -4,
-      car: [
-        [0, 1, 0],
-        [1, 1, 1],
-        [0, 1, 0],
-        [1, 0, 1],
-      ]
-    });
+    if (this.updatedBricksCount % 10 === 0) {
+      const xPosition = this.sk.random(this.carPositions);
+      this.traffic.push({
+        x: xPosition,
+        y: -4,
+        car: [
+          [0, 1, 0],
+          [1, 1, 1],
+          [0, 1, 0],
+          [1, 0, 1],
+        ]
+      });
+    }
   }
 
   handleDecreaseScore() {
@@ -155,20 +159,6 @@ export default class RoadFighters extends Scene {
       this.trafficSpeed += 0.5;
       this.score = 0;
     }
-  }
-
-  spawnTrafficCar() {
-    const xPosition = this.sk.random(this.carPositions);
-    this.traffic.push({
-      x: xPosition,
-      y: -4,
-      car: [
-        [0, 1, 0],
-        [1, 1, 1],
-        [0, 1, 0],
-        [1, 0, 1],
-      ]
-    });
   }
 
   drawLoseIndicator() {
