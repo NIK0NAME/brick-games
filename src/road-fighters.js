@@ -45,8 +45,6 @@ export default class RoadFighters extends Scene {
   }
 
   draw() {
-    this.handleKeyboardInput();
-
     // this.drawGameCanvas();
 
     if (this.state === 'PLAY') {
@@ -253,28 +251,6 @@ export default class RoadFighters extends Scene {
     );
   }
 
-  handleKeyboardInput() {
-    if (this.state !== 'PLAY') return;
-
-    if (this.sk.keyIsDown(this.sk.UP_ARROW)) {
-        if (this.driver.y > 0) {
-          this.driver.y -= 1;
-          // if (!sounds['accelerate'].isPlaying()) {
-          //   sounds['accelerate'].play();
-          // }
-        }
-    } else if (this.sk.keyIsDown(this.sk.DOWN_ARROW)) {
-        if (this.driver.y * this.brickSize.h + this.driver.car.length * this.brickSize.h < this.gameCanvasSize.h * this.brickSize.h) {
-          this.driver.y += 1;
-          // if (!sounds['accelerate'].isPlaying()) {
-          //   sounds['accelerate'].play();
-          // }
-        }
-    } else {
-      // sounds['accelerate'].stop();
-    }
-  }
-
   handleKeyPress(keyCode) {
     if (this.state === 'PLAY') {
       if (keyCode === this.sk.LEFT_ARROW) {
@@ -285,7 +261,6 @@ export default class RoadFighters extends Scene {
             // sounds['wall'].play();
           }
       }
-
       if (keyCode === this.sk.RIGHT_ARROW) {
           if (this.driver.x === 2) {
             // sounds['side'].play();
@@ -293,6 +268,22 @@ export default class RoadFighters extends Scene {
           } else {
             // sounds['wall'].play();
           }
+      }
+      if (keyCode === this.sk.UP_ARROW) {
+        if (this.driver.y > 0) {
+          this.driver.y -= 1;
+          // if (!sounds['accelerate'].isPlaying()) {
+          //   sounds['accelerate'].play();
+          // }
+        }
+      }
+      if (keyCode === this.sk.DOWN_ARROW) {
+        if (this.driver.y * this.brickSize.h + this.driver.car.length * this.brickSize.h < this.gameCanvasSize.h * this.brickSize.h) {
+          this.driver.y += 1;
+          // if (!sounds['accelerate'].isPlaying()) {
+          //   sounds['accelerate'].play();
+          // }
+        }
       }
     }
 
