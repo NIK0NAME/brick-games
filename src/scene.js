@@ -32,21 +32,33 @@ export default class Scene {
   }
 
   drawGameCanvas() {
+
+    this.sk.translate(this.gameCanvasOffset.x, this.gameCanvasOffset.y);
     this.sk.background('#838d72');
     this.sk.noStroke();
     this.sk.fill('#000');
     this.sk.rect(
-      this.gameCanvasOffset.x - 2,
-      this.gameCanvasOffset.y - 2,
+      -2,
+      -2,
       this.gameCanvasSize.w * this.brickSize.w + 4,
       this.gameCanvasSize.h * this.brickSize.h + 4
     );
     this.sk.fill('#838d72');
     this.sk.rect(
-      this.gameCanvasOffset.x - 1,
-      this.gameCanvasOffset.y - 1,
+      -1,
+      -1,
       this.gameCanvasSize.w * this.brickSize.w + 2,
       this.gameCanvasSize.h * this.brickSize.h + 2
     );
+
+    for (let y = 0; y < this.gameCanvasSize.h; y++) {
+      for (let x = 0; x < this.gameCanvasSize.w; x++) {
+        this.drawBrick({
+          x: x * this.brickSize.w,
+          y: y * this.brickSize.h,
+        });
+      }
+    }
+    this.sk.translate(-this.gameCanvasOffset.x, -this.gameCanvasOffset.y);
   }
 }

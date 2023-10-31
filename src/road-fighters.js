@@ -208,11 +208,6 @@ export default class RoadFighters extends Scene {
             y: y * this.brickSize.h,
             color: '#1e1f0f'
           });
-        } else {
-          this.drawBrick({
-            x: x * this.brickSize.w,
-            y: y * this.brickSize.h,
-          });
         }
       }
     }
