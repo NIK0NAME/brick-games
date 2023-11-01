@@ -17,14 +17,11 @@ export default class Menu extends Scene {
 
   draw() {
     this.handleMenuPressedKeys();
-    this.sk.background('#a7a994');
-    this.drawGameCanvas();
-
-    if (this.selectedGame === null) {
-      this.drawMenu();
-    } else {
-      this.games[this.selectedGame].draw();
-    }
+    this.drawMenu();
+    // if (this.selectedGame === null) {
+    // } else {
+    //   this.games[this.selectedGame].draw();
+    // }
   }
 
   drawMenu() {
@@ -80,19 +77,19 @@ export default class Menu extends Scene {
     this.removePressedKey(keyCode);
   }
 
-  handleMenuKeyPress(keyCode) {
-    if (this.selectedGame === null) {
-      this.handleKeyPress(keyCode);
-    } else {
-      this.games[this.selectedGame].handleKeyPress(keyCode);
-    }
-  }
+  // handleKeyPress(keyCode) {
+  //   if (this.selectedGame === null) {
+  //     this.handleKeyPress(keyCode);
+  //   } else {
+  //     this.games[this.selectedGame].handleKeyPress(keyCode);
+  //   }
+  // }
 
-  handleMenuKeyReleased(keyCode) {
-    if (this.selectedGame === null) {
-      this.handleKeyReleased(keyCode);
-    } else {
-      this.games[this.selectedGame].handleKeyReleased(keyCode);
-    }
-  }
+  // handleKeyReleased(keyCode) {
+  //   if (this.selectedGame === null) {
+  //     this.handleKeyReleased(keyCode);
+  //   } else {
+  //     this.games[this.selectedGame].handleKeyReleased(keyCode);
+  //   }
+  // }
 }

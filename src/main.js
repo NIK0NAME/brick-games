@@ -36,23 +36,23 @@ function main() {
     }
 
     sk.keyPressed = () => {
-      gameController.handleKeyPress(sk.keyCode);
+      gameController.keyPress(sk.keyCode);
     }
 
     sk.keyReleased = () => {
-      gameController.handleKeyReleased(sk.keyCode);
+      gameController.keyReleased(sk.keyCode);
     }
 
     document.querySelectorAll('.console-button').forEach((element) => {
       element.addEventListener('click', () => {
         switch (element.title) {
-          case 'left': gameController.handleKeyPress(KEYBOARD_KEYS.LEFT_ARROW); break;
-          case 'right': gameController.handleKeyPress(KEYBOARD_KEYS.RIGHT_ARROW); break;
-          case 'up': gameController.handleKeyPress(KEYBOARD_KEYS.UP_ARROW); break;
-          case 'down': gameController.handleKeyPress(KEYBOARD_KEYS.DOWN_ARROW); break;
-          case 'rotate': gameController.handleKeyPress(KEYBOARD_KEYS.ENTER); break;
-          case 'off': gameController.handleKeyPress(KEYBOARD_KEYS.ESCAPE); break;
-          case 'sp': gameController.handleKeyPress(KEYBOARD_KEYS.P_KEY); break;
+          case 'left': gameController.keyPress(KEYBOARD_KEYS.LEFT_ARROW); break;
+          case 'right': gameController.keyPress(KEYBOARD_KEYS.RIGHT_ARROW); break;
+          case 'up': gameController.keyPress(KEYBOARD_KEYS.UP_ARROW); break;
+          case 'down': gameController.keyPress(KEYBOARD_KEYS.DOWN_ARROW); break;
+          case 'rotate': gameController.keyPress(KEYBOARD_KEYS.ENTER); break;
+          case 'off': gameController.keyPress(KEYBOARD_KEYS.ESCAPE); break;
+          case 'sp': gameController.keyPress(KEYBOARD_KEYS.P_KEY); break;
         }
       });
     });
