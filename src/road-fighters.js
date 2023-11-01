@@ -3,7 +3,7 @@ import Scene from './scene';
 
 export default class RoadFighters extends Scene {
   constructor(sk) {
-    super(sk);
+    super(sk, { id: 'road-fighters' });
     this.name = 'Road Fighters';
     this.sk = sk;
     this.carPositions = [2 ,5];
@@ -45,7 +45,7 @@ export default class RoadFighters extends Scene {
   }
 
   draw() {
-    // this.drawGameCanvas();
+    this.handlePressedKeys();
 
     if (this.state === 'PLAY') {
       this.countToUpdate += this.trafficSpeed;
@@ -251,7 +251,13 @@ export default class RoadFighters extends Scene {
     );
   }
 
-  handleKeyPress(keyCode) {
+  handlePressedKeys() {
+    for (const keyCode of this.pressedKeys) {
+      this.handleKeys(keyCode);
+    }
+  }
+
+  handleKeys(keyCode) {
     if (this.state === 'PLAY') {
       if (keyCode === this.sk.LEFT_ARROW) {
           if (this.driver.x === 5) {

@@ -5,7 +5,7 @@ import Snake from './snake';
 
 export default class Menu extends Scene {
   constructor(sk) {
-    super(sk);
+    super(sk, { id: 'menu' });
     this.sk = sk;
     this.selectedGame = null;
     this.focusedGame = 0;
@@ -16,8 +16,10 @@ export default class Menu extends Scene {
   }
 
   draw() {
+    this.handleMenuPressedKeys();
     this.sk.background('#a7a994');
     this.drawGameCanvas();
+
     if (this.selectedGame === null) {
       this.drawMenu();
     } else {
@@ -44,8 +46,16 @@ export default class Menu extends Scene {
     );
   }
 
-  handleMenuKeyPress(keyCode) {
-    console.log(keyCode);
+  handleMenuPressedKeys() {
+    for (const keyCode of this.pressedKeys) {
+      this.handleKeys(keyCode);
+    }
+  }
+
+  handleKeys(keyCode) {
+    if (keyCode === KEYBOARD_KEYS.ESCAPE) {
+      this.selectedGame = null;
+    }
     if (keyCode === this.sk.LEFT_ARROW) {
       this.focusedGame -= 1;
   
@@ -66,16 +76,23 @@ export default class Menu extends Scene {
       this.selectedGame = this.focusedGame;
       this.games[this.selectedGame].init();
     }
+
+    this.removePressedKey(keyCode);
   }
 
-  handleKeyPress(keyCode) {
-    if (keyCode === KEYBOARD_KEYS.ESCAPE) {
-      this.selectedGame = null;
-    }
+  handleMenuKeyPress(keyCode) {
     if (this.selectedGame === null) {
-      this.handleMenuKeyPress(keyCode);
+      this.handleKeyPress(keyCode);
     } else {
       this.games[this.selectedGame].handleKeyPress(keyCode);
+    }
+  }
+
+  handleMenuKeyReleased(keyCode) {
+    if (this.selectedGame === null) {
+      this.handleKeyReleased(keyCode);
+    } else {
+      this.games[this.selectedGame].handleKeyReleased(keyCode);
     }
   }
 }

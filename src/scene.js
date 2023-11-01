@@ -1,6 +1,8 @@
 export default class Scene {
-  constructor(sk, props = null) {
+  constructor(sk, props) {
+    const { id } = props;
     this.sk = sk;
+    this.id = id,
     this.brickSize = { w: 12, h: 12 };
     this.gameCanvasOffset = { x: 9, y: 9 };
     this.gameCanvasSize = { w: 10, h: 20 };
@@ -8,6 +10,7 @@ export default class Scene {
       background: '#859373',
       foreground: '#838d72',
     };
+    this.pressedKeys = [];
   }
 
   drawBrick(props) {
@@ -60,5 +63,24 @@ export default class Scene {
       }
     }
     this.sk.translate(-this.gameCanvasOffset.x, -this.gameCanvasOffset.y);
+  }
+
+  handleKeyPress(keyCode) {
+    if (!this.pressedKeys.includes(keyCode)) {
+      this.pressedKeys.push(keyCode);
+    }
+
+    // console.log(this.id, this.pressedKeys);
+  }
+
+  removePressedKey(keyCode) {
+    const keyIndex = this.pressedKeys.indexOf(keyCode);
+    if (keyIndex !== -1) {
+      this.pressedKeys.splice(keyIndex, 1);
+    }
+  }
+
+  handleKeyReleased(keyCode) {
+    this.removePressedKey(keyCode);
   }
 }

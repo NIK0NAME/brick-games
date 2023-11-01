@@ -34,7 +34,11 @@ const sketch = (sk) => {
   }
 
   sk.keyPressed = () => {
-    gameMenu.handleKeyPress(sk.keyCode);
+    gameMenu.handleMenuKeyPress(sk.keyCode);
+  }
+
+  sk.keyReleased = () => {
+    gameMenu.handleMenuKeyReleased(sk.keyCode);
   }
 
   document.querySelectorAll('.console-button').forEach((element) => {
