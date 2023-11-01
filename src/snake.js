@@ -1,5 +1,8 @@
-export default class Snake {
+import Scene from './scene';
+
+export default class Snake extends Scene {
   constructor(sk) {
+    super(sk, { id: 'snake' });
     this.sk = sk;
     this.name = 'Snake';
   }
