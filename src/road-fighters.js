@@ -42,6 +42,27 @@ export default class RoadFighters extends Scene {
       this.gameCanvasOffset.x + this.gameCanvasSize.w * this.brickSize.w + 10,
       this.gameCanvasOffset.y + 12
     );
+
+    this.sk.translate(this.gameCanvasOffset.x, this.gameCanvasOffset.y);
+
+    this.drawRoad();
+    const splashCar = {
+      x: this.carPositions[0], y: 2,
+      car: [...this.driver.car]
+    };
+    this.drawCar({ vehicle: splashCar });
+
+    splashCar.x = this.carPositions[1];
+    splashCar.y = 8;
+
+    this.drawCar({ vehicle: splashCar });
+
+    splashCar.x = this.carPositions[0];
+    splashCar.y = 14;
+
+    this.drawCar({ vehicle: splashCar });
+
+    this.sk.translate(-this.gameCanvasOffset.x, -this.gameCanvasOffset.y);
   }
 
   draw() {
@@ -212,9 +233,9 @@ export default class RoadFighters extends Scene {
   }
 
   drawCar(data) {
-    const { vehicle, colors } = data;
+    const { vehicle, colors = {} } = data;
     const { car } = vehicle;
-    const { strokeColor, fillColor } = colors;
+    const { strokeColor = '#676f58', fillColor = '#1e1f0f' } = colors;
     for (let y = 0; y < car.length; y++) {
       for (let x = 0; x < car[0].length; x++) {
         if (

@@ -41,6 +41,8 @@ export default class Menu extends Scene {
       this.gameCanvasOffset.x + this.gameCanvasSize.w * this.brickSize.w + 10,
       this.gameCanvasOffset.y + 12
     );
+
+    game.splash();
   }
 
   handleMenuPressedKeys() {
