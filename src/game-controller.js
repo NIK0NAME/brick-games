@@ -11,7 +11,7 @@ export default class GameController extends Scene {
   }
 
   draw() {
-    this.sk.background('#a7a994');
+    this.sk.background('#838d72');
     this.drawGameCanvas();
 
     if (this.menu.selectedGame === null) {

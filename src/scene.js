@@ -34,10 +34,9 @@ export default class Scene {
     this.sk.rect(x + 2, y + 2, w - 4, h - 4);
   }
 
-  drawGameCanvas() {
-
+  drawGameCanvas(map = null) {
     this.sk.translate(this.gameCanvasOffset.x, this.gameCanvasOffset.y);
-    this.sk.background('#838d72');
+
     this.sk.noStroke();
     this.sk.fill('#000');
     this.sk.rect(
@@ -56,10 +55,18 @@ export default class Scene {
 
     for (let y = 0; y < this.gameCanvasSize.h; y++) {
       for (let x = 0; x < this.gameCanvasSize.w; x++) {
-        this.drawBrick({
-          x: x * this.brickSize.w,
-          y: y * this.brickSize.h,
-        });
+        if (map && map[y][x] === 1) {
+          this.drawBrick({
+            x: x * this.brickSize.w,
+            y: y * this.brickSize.h,
+            color: '#1e1f0f'
+          });
+        } else {
+          this.drawBrick({
+            x: x * this.brickSize.w,
+            y: y * this.brickSize.h,
+          });
+        }
       }
     }
     this.sk.translate(-this.gameCanvasOffset.x, -this.gameCanvasOffset.y);
